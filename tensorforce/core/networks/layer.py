@@ -228,6 +228,15 @@ class Linear(Layer):
         super(Linear, self).__init__(scope=scope, summary_labels=summary_labels)
 
     def tf_apply(self, x):
+        x_env_shape = x.shape[1:]
+        d_size = 1
+
+        for d in x_env_shape:
+            d_size *= d.value
+
+        x = tf.reshape(x, [-1, d_size])
+
+
         if util.rank(x) != 2:
             raise TensorForceError('Invalid input rank for linear layer: {},'
                                    ' must be 2.'.format(util.rank(x)))
