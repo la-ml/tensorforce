@@ -17,7 +17,6 @@ class EnhancedRunner(Runner):
   def writeOut(self, s):
       tqdm.write(s)
 
-
   def run(
         self,
         timesteps=None,
@@ -37,7 +36,6 @@ class EnhancedRunner(Runner):
                 whether to continue execution. For instance, useful for reporting intermediate performance or
                 integrating termination conditions.
         """
-        print("working 1")
 
         # Keep track of episode reward and episode length for statistics.
         self.start_time = time.time()
@@ -52,18 +50,10 @@ class EnhancedRunner(Runner):
         if timesteps is not None:
             timesteps += self.agent.timestep
 
-        print("working 2")
-
-        total = 10000000000
-
         pbar = tqdm(range(episodes))
 
         for i in pbar:
-            #pbar.set_description("Processing episode ", i)
             episode_start_time = time.time()
-            total = total + 100
-
-            #print("working 3")
 
             self.agent.reset()
             state = self.environment.reset()
@@ -79,16 +69,13 @@ class EnhancedRunner(Runner):
                         ('AR500', '{:8.2f}'.format(np.mean(self.episode_rewards[-500:])))
                         ]))
 
-                total = total + 1
                 action = self.agent.act(states=state, deterministic=deterministic)
 
-                #print("working 4")
 
                 if self.repeat_actions > 1:
                     reward = 0
 
                     for repeat in trange(self.repeat_actions):
-                        #print("working")
                         state, terminal, step_reward = self.environment.execute(actions=action)
                         reward += step_reward
                         if terminal:

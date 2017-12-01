@@ -27,7 +27,8 @@ install_requires=[
     'scipy',
     'pillow',
     'pytest',
-    'tqdm'
+    'tqdm',
+    'numpy'
 ]
 
 setup_requires=[
