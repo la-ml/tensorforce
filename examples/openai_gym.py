@@ -30,6 +30,7 @@ import time
 from tensorforce import TensorForceError
 from tensorforce.agents import Agent
 from tensorforce.execution import Runner
+from tensorforce.execution import EnhancedRunner
 from tensorforce.contrib.openai_gym import OpenAIGym
 
 
@@ -98,7 +99,7 @@ def main():
         logger.info("Configuration:")
         logger.info(agent_config)
 
-    runner = Runner(
+    runner = EnhancedRunner(
         agent=agent,
         environment=environment,
         repeat_actions=1
