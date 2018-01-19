@@ -24,8 +24,14 @@ from __future__ import print_function
 import argparse
 import json
 import logging
+import logging.config
+from logging.config import fileConfig
+from logging import StreamHandler
 import os
 import time
+import tqdm
+import sys
+from os import path
 
 from tensorforce import TensorForceError
 from tensorforce.agents import Agent
@@ -56,9 +62,13 @@ def main():
     parser.add_argument('-D', '--debug', action='store_true', default=False, help="Show debug outputs")
 
     args = parser.parse_args()
+    __name__ = 'default'
+    log_file_path = path.join(path.dirname(path.abspath(__file__)), 'configs/logging.conf')
+    logging.config.fileConfig(log_file_path)
 
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.INFO)
+    logger = logging.getLogger('console')
+    #logger.setLevel(logging.INFO)
+    #logger.addHandler(logging.StreamHandler(sys.stdout))
 
     environment = OpenAIGym(
         gym_id=args.gym_id,
